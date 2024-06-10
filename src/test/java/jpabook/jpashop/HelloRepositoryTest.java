@@ -9,11 +9,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class) // JUNIT에게 스프링과 관련된 것으로 테스트를 한다고 알려줌.
 @SpringBootTest
-public class MemberRepositoryTest {
+public class HelloRepositoryTest {
 
     @Autowired
     MemberRepository memberRepository;
@@ -23,21 +21,21 @@ public class MemberRepositoryTest {
     @Rollback(value = false) // 그래서 롤백 안 시키게 false로 넣어줌.
     public void testMember() throws Exception {
         //given
-        Member member = new Member();
-        member.setUsername("memberA");
+        Hello hello = new Hello();
+        hello.setUsername("memberA");
 
-        Member member2 = new Member();
-        member2.setUsername("memberB");
+        Hello hello2 = new Hello();
+        hello2.setUsername("memberB");
 
         //when
-        Long saveId = memberRepository.save(member);
-        memberRepository.save(member2);
-        Member findMember = memberRepository.find(saveId);
+        Long saveId = memberRepository.save(hello);
+        memberRepository.save(hello2);
+        Hello findHello = memberRepository.find(saveId);
 
         //then
-        Assertions.assertThat(findMember.getId()).isEqualTo(saveId);
-        Assertions.assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
-        Assertions.assertThat(findMember).isEqualTo(member);
+        Assertions.assertThat(findHello.getId()).isEqualTo(saveId);
+        Assertions.assertThat(findHello.getUsername()).isEqualTo(hello.getUsername());
+        Assertions.assertThat(findHello).isEqualTo(hello);
     }
 
 }
