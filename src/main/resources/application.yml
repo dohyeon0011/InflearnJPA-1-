@@ -1,6 +1,6 @@
 spring:
-  database:
-    url: jdbc:h2:tcp://localhost/~/jpabook;MVCC=TRUE # MVCC = true를 주면 여러 개가 한 번에 접근 했을 때 좀 더 빨리 처리가 됨.(그냥 넣어 주는 게 권장)
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/jpabook
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -13,6 +13,6 @@ spring:
 #        show_sql: true System.out으로 뿌림
         format_sql: true
 
-  logging:
-    level:
-      org.hibernate.SQL: debug # 하이버네이트가 생성하는(SQL, JPA) 동작들이 로그로 찍혀서 모두 보임.
+logging.level:
+  org.hibernate.SQL: debug  # 하이버네이트가 생성하는(SQL, JPA) 동작들이 로그로 찍혀서 모두 보임.
+  org.hibernate.orm.jdbc.bind: trace
