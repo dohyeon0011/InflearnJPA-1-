@@ -1,10 +1,8 @@
 package jpabook.jpashop.service;
 
 import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.repositody.MemberRepository;
-import lombok.AllArgsConstructor;
+import jpabook.jpashop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +39,7 @@ public class MemberService {
     }
 
     // 회원 전체 조회
-//    @Transactional(readOnly = true) // 조회 시(읽기 시) 트랙잭션 readOnlt = true를 주면, 최적화가 돼서 좋음, 데이터 변경하는 곳에 하면 데이터 변경이 안 먹힘.
+//    @Transactional(readOnly = true) // 조회 시(읽기 시) 트랙잭션 readOnly = true를 주면, 최적화가 돼서 좋음, 데이터 변경하는 곳에 하면 데이터 변경이 안 먹힘.
     public List<Member> findMembers() {
         return memberRepository.findAll();
     }
