@@ -2,10 +2,13 @@ package jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 객체 생성 막기
 @Getter @Setter
 public class OrderItem {
 
@@ -24,4 +27,32 @@ public class OrderItem {
     private int orderPrice; // 주문 가격
 
     private int count; // 주문 수량
+
+    // == 생성 메서드 == //
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+
+        item.removeStock(count);
+        return orderItem;
+    }
+
+    // == 비즈니스 로직 == //
+    /**
+     * 주문 취소
+     */
+    public void cancel() {
+        getItem().addStock(count); // 재고 수량 원복, JPA 변경 감지로 update 쿼리가 다 쫘르륵 날라감
+    }
+
+    // == 조회 로직 == //
+    /**
+     * 상품 전체 가격 조회
+     */
+    public int getTotalPrice() {
+        return getOrderPrice() * getCount();
+    }
+
 }
