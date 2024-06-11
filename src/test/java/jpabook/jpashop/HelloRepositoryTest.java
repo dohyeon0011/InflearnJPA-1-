@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class HelloRepositoryTest {
 
     @Autowired
-    MemberRepository memberRepository;
+    HelloRepository helloRepository;
 
     @Test
     @Transactional // 테스트에 있으면 트랙잭션 단위로 커밋하고 지워버림.
@@ -28,9 +28,9 @@ public class HelloRepositoryTest {
         hello2.setUsername("memberB");
 
         //when
-        Long saveId = memberRepository.save(hello);
-        memberRepository.save(hello2);
-        Hello findHello = memberRepository.find(saveId);
+        Long saveId = helloRepository.save(hello);
+        helloRepository.save(hello2);
+        Hello findHello = helloRepository.find(saveId);
 
         //then
         Assertions.assertThat(findHello.getId()).isEqualTo(saveId);
