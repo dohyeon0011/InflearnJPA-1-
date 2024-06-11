@@ -8,7 +8,7 @@
 #
 #  jpa:
 #    hibernate:
-#      ddl-auto: create
+#      ddl-auto: create # 기본으로 create-drop으로 해줌
 #    properties:
 #      hibernate:
 #        show_sql: true System.out으로 뿌림
