@@ -61,8 +61,8 @@ public class OrderRepository {
     /**
      * JPQL
      */
-    /*public List<Order> findAll(OrderSearch orderSearch) {
-        String jpql = "select o from O rder o join o.member m";
+    public List<Order> findByAllString(OrderSearch orderSearch) {
+        String jpql = "select o from Order o join o.member m";
         boolean isFirstCondition = true;
 
         // 주문 상태 검색
@@ -84,7 +84,7 @@ public class OrderRepository {
             } else {
                 jpql += " and";
             }
-            jpql += " m.name like :name";
+            jpql += " m.username like :name";
         }
 
         TypedQuery<Order> query = em.createQuery(jpql, Order.class)
@@ -98,7 +98,7 @@ public class OrderRepository {
         }
 
         return query.getResultList();
-    }*/
+    }
 
     /**
      * JPA Criteria (JPA 표준 스펙이지만 사용하지 않음.)
