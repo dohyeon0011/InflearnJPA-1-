@@ -30,6 +30,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-devtools' // 변경 되면 캐싱을 안해서 바로 리로딩 되게 해줌
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0' // 쿼리 파라미터 외부 라이브러리
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta'
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
