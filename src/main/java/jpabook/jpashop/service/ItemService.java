@@ -21,6 +21,32 @@ public class ItemService {
         itemRepository.save(item);
     }
 
+    @Transactional // flush() 날려서 디비에 update 쿼리침.(변경 감지, 이게 나은 방법)
+    public void updateItem(Long itemId, String name, int price, int stockQuantity) {
+        Item findItem = itemRepository.findById(itemId);
+        findItem.setName(name);
+        findItem.setPrice(price);
+        findItem.setStockQuantity(stockQuantity);
+    }
+
+    /*@Transactional // flush() 날려서 디비에 update 쿼리침.(변경 감지, 이게 나은 방법)
+    public void updateItem(Long itemId, UpdateItemDto itemDto) {
+        Item findItem = itemRepository.findById(itemId);
+        findItem.setName(name);
+        findItem.setPrice(price);
+        findItem.setStockQuantity(stockQuantity);
+    }*/
+
+    /*@Transactional // flush() 날려서 디비에 update 쿼리침.(변경 감지, 이게 나은 방법)
+    public Item updateItem(Long itemId, Book book) {
+        Item findItem = itemRepository.findById(itemId);
+        findItem.setName(book.getName());
+        findItem.setPrice(book.getPrice());
+        findItem.setStockQuantity(book.getStockQuantity());
+
+        return findItem;
+    }*/
+
     public List<Item> findItems() {
         return itemRepository.findAll();
     }
