@@ -45,8 +45,14 @@ public class MemberService {
     }
 
 //    @Transactional(readOnly = true) 일일이 거는 방법
-    public Member findMember(Member member) {
-        return memberRepository.findById(member.getId());
+    public Member findMember(Long memberId) {
+        return memberRepository.findById(memberId);
+    }
+
+    @Transactional // 변경 감지
+    public void update(Long id, String name) { // Member로 반환하면 업데이트 하면서 셀렉도 날리게 돼서 분리하려고 void로
+        Member member = memberRepository.findById(id);
+        member.setUsername(name);
     }
 
 }
