@@ -33,7 +33,7 @@ public class OrderSimpleApiController {
     @GetMapping("/api/v1/simple-orders")
     public List<Order> ordersV1() {
         List<Order> all = orderRepository.findByAllString(new OrderSearch());
-        for (Order order : all) {
+        for (Order order : all) { // 이러면 멤버 객체 필드와 딜리버리 객체 필드 정보를 다 가져옴, 얘 없으면 딱 Order 엔티티 클래스의 있는 정보 그대로만 가져옴.
             order.getMember().getUsername(); // getMember() 까지는 프록시지만 getUsername() 부터는 실제 객체 데이터 값을 가져옴.(member의 username 실제 값을 가져와서, Lazy 강제 초기화)
             order.getDelivery().getAddress(); // Lazy 강제 초기화
         }
