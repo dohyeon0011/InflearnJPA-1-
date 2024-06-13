@@ -7,7 +7,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
+//@BatchSize(size = 100) OneToX는 클래스 단에
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 객체 생성 막기
 @Getter @Setter
@@ -66,8 +68,13 @@ public class OrderItem {
     /**
      * 상품 전체 가격 조회
      */
-    public int getTotalPrice() {
+    public int getTotalPrice1() {
         return getOrderPrice() * getCount();
     }
+
+    // postman json api 조회시(엔티티 통으로) void 형이 아닌 이런 변수 자료형도 조회시 그대로 노출됨.(getHi면 hi로 바껴서 나감)
+    /*public String getHi() {
+        return "hihi";
+    }*/
 
 }

@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.aspectj.weaver.ast.Or;
+import org.hibernate.annotations.BatchSize;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
+//    @BatchSize(size = 1000) XToMany에선 리스트에다가
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
@@ -103,12 +104,12 @@ public class Order {
     public int getTotalPrice() {
         /*int totalPrice = 0;
         for (OrderItem orderItem : orderItems) {
-            totalPrice = orderItem.getTotalPrice();
+            totalPrice = orderItem.getTotalPrice1();
         }
         return totalPrice;*/
 
         return orderItems.stream()
-                .mapToInt(OrderItem::getTotalPrice)
+                .mapToInt(OrderItem::getTotalPrice1)
                 .sum();
     }
 
