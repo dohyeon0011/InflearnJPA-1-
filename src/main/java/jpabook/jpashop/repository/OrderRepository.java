@@ -2,14 +2,11 @@ package jpabook.jpashop.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.*;
 import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -98,6 +95,36 @@ public class OrderRepository {
         }
 
         return query.getResultList();
+    }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery( // LAZY여도 무시하고 프록시 말고 실제 객체 데이터 값을 한 번에 땡겨서 가져옴.
+                        "select o from Order o" +
+                                " join fetch o.member m" +
+                                " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public List<Order> findAllWithMemberDelivery() {
+        return em.createQuery( // LAZY여도 무시하고 프록시 말고 실제 객체 데이터 값을 한 번에 땡겨서 가져옴.
+                "select o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d", Order.class
+        ).getResultList();
+    }
+
+    // fetch join 하는 순간 페이징이 불가능.(일대다 컬렉션 페치 조인에서는 데이터 뻥튀기가 나서)
+    // 컬렉션 페치 조인은 1개만 사용할 수 있다. 컬렉션 둘 이상에 페치 조인을 사용하면 안된다. 데이터가 부정 합하게 조회될 수 있다.
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d" +
+                        " join fetch o.orderItems oi" +
+                        " join fetch oi.item i", Order.class
+        ).getResultList();
     }
 
     /**
