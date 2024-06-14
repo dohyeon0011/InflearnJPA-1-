@@ -30,6 +30,8 @@ public class OrderQueryRepository {
     /**
      * 1:N 관계인 orderItems 조회
      * toMany 관계는 최적화 하기 어려우므로 findOrderItems() 같은 별도의 메서드로 조회한다.
+     * IN 절이 아니라 N + 1 발생
+     * 단건 조회시 굿
      */
     private List<OrderItemQueryDto> findOrderItems(Long orderId) {
         return em.createQuery(
@@ -90,6 +92,18 @@ public class OrderQueryRepository {
                 .map(o -> o.getOrderId()) // OrderQueryDto에서 order id 2개 뽑기
                 .collect(Collectors.toList());
         return orderIds;
+    }
+
+    // 한방 쿼리
+    public List<OrderFlatDto> findAllByDto_falt() {
+        return em.createQuery(
+                "select new jpabook.jpashop.repository.order.query.OrderFlatDto(o.id, m.username, o.orderDate, o.status, d.address, i.name, oi.orderPrice, oi.count)" +
+                        " from Order o" +
+                        " join o.member m" +
+                        " join o.delivery d" +
+                        " join o.orderItems oi" +
+                        " join oi.item i", OrderFlatDto.class)
+                .getResultList();
     }
 
 }
