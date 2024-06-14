@@ -13,6 +13,7 @@ spring:
 #        show_sql: true System.out으로 뿌림
         format_sql: true
         default_batch_fetch_size: 100 # @BatchSize = 100 한 방에 100개 쫙 뽑아옴. 원래라면 whwer order_item_id = ? 이랬을텐데 in으로 100개 땡김
+#    open-in-view: false # OSIV(Open Session In View)를 끄면 모든 지연로딩을 트랜잭션 안에서 처리해아 한다(한 트랜잭션까지만 디비 커넥터를 들고 있다가 끝나면 커넥터 끊고, 영속성 끝내버려서(준영속)), 뷰 템플릿에서 지연로딩 작동 X
 
 logging.level:
   org.hibernate.SQL: debug  # 하이버네이트가 생성하는(SQL, JPA) 동작들이 로그로 찍혀서 모두 보임.
